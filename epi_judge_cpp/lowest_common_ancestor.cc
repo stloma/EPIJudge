@@ -8,8 +8,18 @@ using std::unique_ptr;
 BinaryTreeNode<int>* LCA(const unique_ptr<BinaryTreeNode<int>>& tree,
                          const unique_ptr<BinaryTreeNode<int>>& node0,
                          const unique_ptr<BinaryTreeNode<int>>& node1) {
-  // TODO - you fill in here.
-  return nullptr;
+
+  if (!tree) return nullptr;
+  if (tree == node0 || tree == node1) return tree.get();
+
+  auto left = LCA(tree->left, node0, node1);
+  auto right = LCA(tree->right, node0, node1);
+
+  if (!left) return right;
+  if (!right) return left;
+
+  return tree.get();
+
 }
 int LcaWrapper(TimedExecutor& executor,
                const unique_ptr<BinaryTreeNode<int>>& tree, int key0,
