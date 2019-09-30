@@ -14,10 +14,46 @@ struct Coordinate {
 
   int x, y;
 };
+
+bool dfs(vector<vector<Color>>& maze, const Coordinate&s, const Coordinate& e, vector<Coordinate>& path) {
+
+  if (s == e) {
+    path.push_back(s);
+    return true;
+  }
+
+  if (s.x < 0 || s.x >= maze.size() || s.y < 0 || s.y >= maze[0].size() || maze[s.x][s.y] == kBlack)
+    return false;
+
+  maze[s.x][s.y] = kBlack;
+  path.push_back(s);
+
+  for (const auto& coord : {
+          Coordinate{s.x + 1, s.y},
+          Coordinate{s.x - 1, s.y},
+          Coordinate{s.x, s.y + 1},
+          Coordinate{s.x, s.y - 1}
+  }) {
+
+    if (dfs(maze, coord, e, path))
+      return true;
+  }
+
+  path.pop_back();
+
+  return false;
+
+}
+
 vector<Coordinate> SearchMaze(vector<vector<Color>> maze, const Coordinate& s,
                               const Coordinate& e) {
-  // TODO - you fill in here.
-  return {};
+
+  vector<Coordinate> path;
+
+  dfs(maze, s, e, path);
+
+  return path;
+
 }
 template <>
 struct SerializationTraits<Color> : SerializationTraits<int> {
