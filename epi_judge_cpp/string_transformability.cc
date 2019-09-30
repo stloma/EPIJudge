@@ -6,8 +6,37 @@ using std::unordered_set;
 
 // Uses BFS to find the least steps of transformation.
 int TransformString(unordered_set<string> D, const string& s, const string& t) {
-  // TODO - you fill in here.
-  return 0;
+
+  if (s == t) return 0;
+
+  struct StringWithDepth {
+      string s;
+      int depth;
+  };
+
+  std::queue<StringWithDepth> q;
+  q.push({s, 0});
+  D.erase(s);
+
+  while (!q.empty()) {
+    auto u = q.front(); q.pop();
+
+    if (u.s == t) return u.depth;
+
+    auto tmp_s = u.s;
+    for (int i = 0; i < s.size(); ++i) {
+      for (int c = 0; c < 26; ++c) {
+        tmp_s[i] = c + 'a';
+        if (D.find(tmp_s) != D.end()) {
+          q.push({tmp_s, u.depth + 1});
+          D.erase(tmp_s);
+        }
+      }
+      tmp_s[i] = u.s[i];
+    }
+  }
+
+  return -1;
 }
 
 int main(int argc, char* argv[]) {
