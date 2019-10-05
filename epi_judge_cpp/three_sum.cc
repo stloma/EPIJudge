@@ -3,8 +3,35 @@
 using std::vector;
 
 bool HasThreeSum(vector<int> A, int t) {
-  // TODO - you fill in here.
-  return true;
+
+  // 143 us average, 5 us median
+  std::sort(A.begin(), A.end());
+
+  for (int i = 0; i < A.size(); ++i) {
+    int l = i, r = A.size() - 1;
+    int target = t - A[i];
+
+    while (l <= r) {
+      int left = A[l];
+      int right = A[r];
+      int sum = left + right;
+
+      if (sum == target) return true;
+      if (sum < target) l++;
+      else r--;
+    }
+  }
+
+  // 333 us average, 3 us median
+  // for (auto a : A) {
+  //   for (auto b : A) {
+  //     for (auto c : A) {
+  //       if (a + b + c == t) return true;
+  //     }
+  //   }
+  // }
+
+  return false;
 }
 
 int main(int argc, char* argv[]) {
