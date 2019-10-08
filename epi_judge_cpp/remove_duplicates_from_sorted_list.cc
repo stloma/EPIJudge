@@ -4,8 +4,16 @@
 using std::shared_ptr;
 
 shared_ptr<ListNode<int>> RemoveDuplicates(const shared_ptr<ListNode<int>>& L) {
-  // TODO - you fill in here.
-  return nullptr;
+
+  auto iter = L;
+
+  while (iter && iter->next) {
+    while (iter && iter->next && iter->data == iter->next->data)
+      iter->next = iter->next->next;
+    if (iter)
+      iter = iter->next;
+  }
+  return L;
 }
 
 int main(int argc, char* argv[]) {
