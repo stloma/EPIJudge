@@ -12,6 +12,15 @@ vector<int> SortApproximatelySortedData(
   while (sequence_begin != sequence_end)
     A.push_back(*sequence_begin++);
 
+  // Insertion sort is O(kn)
+  // for (int i = 1; i < A.size(); ++i) {
+  //   int j = i;
+  //   while (j > 0 && A[j-1] > A[j]) {
+  //     std::swap(A[j], A[j - 1]);
+  //     j--;
+  //   }
+  // }
+
   for (int i = 0; i < k; ++i) {
     pq.push(-A[i]);
   }
