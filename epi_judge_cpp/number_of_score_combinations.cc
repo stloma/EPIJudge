@@ -4,8 +4,18 @@ using std::vector;
 
 int NumCombinationsForFinalScore(int final_score,
                                  const vector<int>& individual_play_scores) {
-  // TODO - you fill in here.
-  return 0;
+
+  vector<int> dp (final_score+1, 0);
+  dp[0] = 1;
+
+  for (const auto& points : individual_play_scores) {
+    for (int x = 0; x <= final_score; ++x) {
+      if (points <= x) {
+        dp[x] += dp[x-points];
+      }
+    }
+  }
+  return dp.back();
 }
 
 int main(int argc, char* argv[]) {
